@@ -421,13 +421,14 @@ async def send_file(admin_settings, bot, query, user_id, file_id):
         mesg = query.message
     elif isinstance(query, Message):
         mesg = query
-     buttons = InlineKeyboardMarkup(
+            
+    buttons = InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton("🎥NEW MOVIES 🎥", url="https://t.me/CINEMA_HUB_NEWMOVIES")
             ]
         ]
-    )
+     )
 
     info = None
     if admin_settings.info_msg and admin_settings.info_img:
