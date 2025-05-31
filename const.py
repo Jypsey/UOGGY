@@ -82,6 +82,15 @@ __`/indexlink <last message link>` or `/indexlink <start message link> <last mes
 ‣/total - __Get count of total files in DB__
 """
 
+ABOUT_MSG = """✯ 𝙼𝚈 𝙽𝙰𝙼𝙴: <a href='https://t.me/OGGYCINEMAA_BOT'>OGGY BOT</a>
+✯ Cʀᴇᴀᴛᴏʀ: <a href='https://t.me/BATMAN_CINEMAHUB'>Tʜɪs ᴘᴇʀsᴏɴ</a>
+✯ Lɪʙʀᴀʀʏ: <a href='https://docs.pyrogram.org/'>Pʏʀᴏɢʀᴀᴍ</a>
+✯ Lᴀɴɢᴜᴀɢᴇ: <a href='https://www.python.org/download/releases/3.0/'>Pʏᴛʜᴏɴ 3</a>
+✯ DᴀᴛᴀBᴀsᴇ: <a href='https://www.mongodb.com/'>MᴏɴɢᴏDB</a>
+✯ Bᴏᴛ Sᴇʀᴠᴇʀ: <a href='https://t.me/MYFASTSERVERR'>Qᴜɪᴄᴋ Fᴀsᴛ</a>
+✯ Bᴜɪʟᴅ Sᴛᴀᴛᴜs: v2.0.3 [ Sᴛᴀʙʟᴇ ]</b>"""
+
+
 REMOVE_WORDS = [
     "[MCU]", "@WMR", "Dramaost", "@R A R B G", "AMZN", "WEBDL", "WEB DL", "DVDRip", "HDRip", "HDTV", 
     "rarbg", "HSWEBDL", "10Bit", "WEBRip", "AAC", "DD5 1", "6CH", "2CH", "DDP5 1", "Mp3", "ESub", "EAC3", 
