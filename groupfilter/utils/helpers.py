@@ -4,7 +4,7 @@ import base64
 from struct import pack
 from pyrogram import raw
 from pyrogram.file_id import FileId, FileType, PHOTO_TYPES, DOCUMENT_TYPES
-from sample_const import REMOVE_WORDS
+from const import REMOVE_WORDS
 
 
 def get_input_file_from_file_id(
