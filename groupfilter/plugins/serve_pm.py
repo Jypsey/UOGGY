@@ -240,7 +240,7 @@ async def get_pm_result(search, page_no, user_id, username, chat_id):
         crnt_pg = index // 10 + 1
         tot_pg = (count + 10 - 1) // 10
         btn_count = 0
-        result = f"**Search Query:** `{search}`\n**Total Results:** `{count}`\n**Page:** `{crnt_pg}/{tot_pg}`\n"
+        result = f"**📁 𝐇𝐞𝐫𝐞 𝐢𝐬 𝐖𝐡𝐚𝐭 𝐈 𝐅𝐨𝐮𝐧𝐝 𝐈𝐧 𝐌𝐲 𝐃𝐚𝐭𝐚𝐛𝐚𝐬𝐞 𝐅𝐨𝐫 𝐘𝐨𝐮𝐫 𝐐𝐮𝐞𝐫𝐲 👇**\n\n**🍂 𝐌𝐨𝐯𝐢𝐞 𝐍𝐚𝐦𝐞 :** `{search}`\n**🗳️ 𝐓𝐨𝐭𝐚𝐥 𝐑𝐞𝐬𝐮𝐥𝐭𝐬 :** `{count}`\n**📚 𝐓𝐨𝐭𝐚𝐥 𝐏𝐚𝐠𝐞𝐬 :** `{crnt_pg}/{tot_pg}`\n"
         page = page_no
 
         for file in files["files"]:
@@ -320,7 +320,7 @@ async def get_pm_files(bot, query):
     if isinstance(query, CallbackQuery):
         try:
             file_id = query.data.split("#")[1]
-            await query.answer("📨 Sending File..", cache_time=10)
+            await query.answer("📨 𝐒𝐞𝐧𝐝𝐢𝐧𝐠 𝐟𝐢𝐥𝐞...", cache_time=10)
             cbq = True
         except QueryIdInvalid:
             await bot.send_message(
@@ -387,43 +387,36 @@ async def get_pm_files(bot, query):
 async def send_pm_file(admin_settings, bot, query, user_id, file_id, cbq):
     filedetails = await get_file_details(file_id)
     f_caption = ""
-
     for files in filedetails:
-        f_caption = files.caption or f"📂 Fɪʟᴇɴᴀᴍᴇ : {files.file_name}"
-
-        if admin_settings and admin_settings.custom_caption:
-            f_caption = f"📂 Fɪʟᴇɴᴀᴍᴇ : {files.file_name}\n\n{admin_settings.custom_caption}"
-
+        f_caption = files.caption
+        if admin_settings.custom_caption:
+            f_caption = f"📂 Fɪʟᴇɴᴀᴍᴇ : {files.file_name}" + "\n\n" + admin_settings.custom_caption
+        elif f_caption is None:
+            f_caption = f"📂 Fɪʟᴇɴᴀᴍᴇ : {files.file_name}"
         f_caption = "**" + f_caption + "**"
 
-        if admin_settings and admin_settings.caption_uname:
-            f_caption += "\n\n" + admin_settings.caption_uname
-
-    buttons = InlineKeyboardMarkup([
-        [InlineKeyboardButton("🎥NEW MOVIES 🎥", url="https://t.me/CINEMA_HUB_NEWMOVIES")]
-    ])
+    if admin_settings.caption_uname:
+        f_caption = f_caption + "\n\n" + admin_settings.caption_uname
 
     info = None
-    
-    if admin_settings:
-        if admin_settings.info_msg and admin_settings.info_img:
-            if cbq:
-                info = await query.message.reply_photo(
-                    chat_id=user_id,
-                    photo=admin_settings.info_img,
-                    caption=admin_settings.info_msg,
-                )
-            else:
-                info = await query.reply_photo(
-                    photo=admin_settings.info_img,
-                    caption=admin_settings.info_msg,
-                    quote=True,
-                )
-        elif admin_settings.info_msg:
-            if cbq:
-                info = await query.message.reply_text(admin_settings.info_msg)
-            else:
-                info = await query.reply_text(admin_settings.info_msg)
+    if admin_settings.info_msg and admin_settings.info_img:
+        if cbq:
+            info = await query.message.reply_photo(
+                chat_id=user_id,
+                photo=admin_settings.info_img,
+                caption=admin_settings.info_msg,
+            )
+        else:
+            info = await query.reply_photo(
+                photo=admin_settings.info_img,
+                caption=admin_settings.info_msg,
+                quote=True,
+            )
+    elif admin_settings.info_msg and not admin_settings.info_img:
+        if cbq:
+            info = await query.message.reply_text(admin_settings.info_msg)
+        else:
+            info = await query.reply_text(admin_settings.info_msg)
 
     try:
         if cbq:
@@ -432,7 +425,6 @@ async def send_pm_file(admin_settings, bot, query, user_id, file_id, cbq):
                 caption=f_caption,
                 parse_mode=ParseMode.MARKDOWN,
                 quote=True,
-                reply_markup=buttons,
             )
         else:
             msg = await query.message.reply_cached_media(
@@ -440,62 +432,56 @@ async def send_pm_file(admin_settings, bot, query, user_id, file_id, cbq):
                 caption=f_caption,
                 parse_mode=ParseMode.MARKDOWN,
                 quote=True,
-                reply_markup=buttons,
             )
     except MediaEmpty:
         LOGGER.warning("File not found: %s", str(file_id))
         return
-    if admin_settings and admin_settings.auto_delete:
+
+    if admin_settings.auto_delete:
         try:
             delay_dur = admin_settings.auto_delete
             delay = delay_dur / 60 if delay_dur > 60 else delay_dur
             delay = round(delay, 2)
-            minsec = f"{delay} mins" if delay_dur > 60 else f"{delay} secs"
-
-        if admin_settings.del_msg and admin_settings.del_img:
-            disc = await msg.reply_photo(
-                photo=admin_settings.del_img,
-                caption=admin_settings.del_msg,
-                quote=True,
-            )
-        elif admin_settings.del_msg and not admin_settings.del_img:
-            del_msg = admin_settings.del_msg
-            disc = await msg.reply_text(del_msg)
-        else:
-            del_msg = f"Please save the file to your saved messages, it will be deleted in {minsec}"
-            disc = await msg.reply_text(del_msg)
-
-        run_time = datetime.now() + timedelta(seconds=int(delay_dur))
-        trigger = DateTrigger(run_date=run_time)
-
-        if info:
+            minsec = str(delay) + " mins" if delay_dur > 60 else str(delay) + " secs"
+            if admin_settings.del_msg and admin_settings.del_img:
+                disc = await msg.reply_photo(
+                    photo=admin_settings.del_img,
+                    caption=admin_settings.del_msg,
+                    quote=True,
+                )
+            elif admin_settings.del_msg and not admin_settings.del_img:
+                del_msg = admin_settings.del_msg
+                disc = await msg.reply_text(del_msg)
+            else:
+                del_msg = f"Please save the file to your saved messages, it will be deleted in {minsec}"
+                disc = await msg.reply_text(del_msg)
+            run_time = datetime.now() + timedelta(seconds=int(delay_dur))
+            trigger = DateTrigger(run_date=run_time)
+            if info:
+                scheduler.add_job(
+                    del_message,
+                    trigger,
+                    args=[info.chat.id, info.id],
+                    max_instances=500000,
+                    misfire_grace_time=100,
+                )
+            txt = "File has been deleted"
             scheduler.add_job(
                 del_message,
                 trigger,
-                args=[info.chat.id, info.id],
+                args=[msg.chat.id, msg.id, txt],
                 max_instances=500000,
                 misfire_grace_time=100,
             )
-
-        txt = "File has been deleted"
-        scheduler.add_job(
-            del_message,
-            trigger,
-            args=[msg.chat.id, msg.id, txt],
-            max_instances=500000,
-            misfire_grace_time=100,
-        )
-        scheduler.add_job(
-            del_message,
-            trigger,
-            args=[disc.chat.id, disc.id],
-            max_instances=500000,
-            misfire_grace_time=200,
-        )
-    except AttributeError as e:
-        LOGGER.warning("Error occurred while deleting file: %s", str(e))
-
-
+            scheduler.add_job(
+                del_message,
+                trigger,
+                args=[disc.chat.id, disc.id],
+                max_instances=500000,
+                misfire_grace_time=200,
+            )
+        except AttributeError as e:
+            LOGGER.warning("Error occurred while deleting file: %s", str(e))
 
 
 @Client.on_message(
