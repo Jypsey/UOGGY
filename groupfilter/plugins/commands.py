@@ -24,24 +24,25 @@ async def jso(bot, update):
 async def start(bot, update):
     if len(update.command) == 1:
         user_id = update.from_user.id
-        name = update.from_user.first_name if update.from_user.first_name else " "
-        user_name = (
-            "@" + update.from_user.username if update.from_user.username else None
-        )
+        name = update.from_user.first_name if update.from_user.first_name else "User"
+        user_name = "@" + update.from_user.username if update.from_user.username else None
         await add_user(user_id, user_name)
 
         try:
-            start_msg = START_MSG.format(name, user_id)
+            # Correct formatting with named parameters
+            start_msg = START_MSG.format(name=name, user_id=user_id)
         except Exception as e:
-            LOGGER.warning(e)
-            start_msg = START_MSG.format(name, user_id)
+            LOGGER.error(f"Error formatting START_MSG: {e}")
+            # Fallback message
+            start_msg = f"Hi {name}, welcome to the bot!"
+            
         await update.reply_video(
             video='https://envs.sh/JXQ.mp4',
             caption=start_msg,
             quote=True,
             reply_markup=START_KB,
             parse_mode=enums.ParseMode.HTML
-        ) 
+        )
     elif len(update.command) == 2:
         src = update.command[1].split("_")
         if src[0] == "search":
