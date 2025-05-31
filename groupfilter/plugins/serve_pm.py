@@ -445,14 +445,12 @@ async def send_pm_file(admin_settings, bot, query, user_id, file_id, cbq):
     except MediaEmpty:
         LOGGER.warning("File not found: %s", str(file_id))
         return
-
-
     if admin_settings and admin_settings.auto_delete:
-    try:
-        delay_dur = admin_settings.auto_delete
-        delay = delay_dur / 60 if delay_dur > 60 else delay_dur
-        delay = round(delay, 2)
-        minsec = f"{delay} mins" if delay_dur > 60 else f"{delay} secs"
+        try:
+            delay_dur = admin_settings.auto_delete
+            delay = delay_dur / 60 if delay_dur > 60 else delay_dur
+            delay = round(delay, 2)
+            minsec = f"{delay} mins" if delay_dur > 60 else f"{delay} secs"
 
         if admin_settings.del_msg and admin_settings.del_img:
             disc = await msg.reply_photo(
@@ -496,6 +494,7 @@ async def send_pm_file(admin_settings, bot, query, user_id, file_id, cbq):
         )
     except AttributeError as e:
         LOGGER.warning("Error occurred while deleting file: %s", str(e))
+
 
 
 
