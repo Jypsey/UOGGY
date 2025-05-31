@@ -3,9 +3,17 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 START_KB = InlineKeyboardMarkup(
     [
-        [InlineKeyboardButton('⚙ Lᴀᴛᴇꜱᴛ Mᴏᴠɪᴇ Rᴇʟᴇᴀꜱᴇꜱ ⚙', url='https://t.me/+uA5gEKm8WXk1ZTll')],
-        [InlineKeyboardButton('⚓️ Oᴛᴛ Iɴsᴛᴀɢʀᴀᴍ Cʜᴀɴɴᴇʟ ⚓️', url='https://www.instagram.com/new_ott__updates?igsh=enI5ZzIzcXkzd3Bl')],
-        [InlineKeyboardButton('🖥 Oᴛᴛ Uᴩᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ 🖥', url='https://t.me/MCUupdatesLINKS')]
+        [
+            InlineKeyboardButton('🔗 ᴏᴜʀ ᴄʜᴀɴᴇʟꜱ ʟɪɴᴋꜱ 🔗', url='https://t.me/CINEMAHUB_LINK')
+            ],[
+            InlineKeyboardButton('📌 ᴍʏ ɢʀᴏᴜᴘ', url='https://t.me/+rotT30StVG1hYmZl'),
+            InlineKeyboardButton('🛠 ᴍʏ ᴏᴡɴᴇʀ', url='https://t.me/BATMAN_CINEMAHUB')
+            ],[
+            InlineKeyboardButton('⚠️ ʜᴇʟᴘ', callback_data='help_cb'),
+            InlineKeyboardButton('⚙️ ᴀʙᴏᴜᴛ', callback_data='about_cb')
+            ],[
+            InlineKeyboardButton('➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ', url='https://t.me/OGGYCINEMAA_BOT?startgroup=true')           
+        ]
     ]
 )
 HELP_KB = InlineKeyboardMarkup(
@@ -17,7 +25,8 @@ HELP_KB = InlineKeyboardMarkup(
 )
 
 
-STARTMSG = "Hi **[{}](tg://user?id={})**, I am a an autofilter bot which finds & shares media from my database."
+START_MSG ="""Hi <b><a href='tg://user?id={user_id}'>{name}</a></b>,  
+ഞാൻ ഒരു <b>AUTO FILTER BOT</b> ആണ്, എന്റെ ഉടമസ്ഥർ <a href='https://t.me/+sZr3rX7Al48yZTI1'>CINEMA-HUB</a> ആണ്, നിങ്ങൾക്കും നിങ്ങളുടെ ഗ്രൂപ്പുകളിൽ ഇപ്പോൾ എന്നെ ഉപയോഗിക്കാവുന്നതാണ്"""
 
 
 HELPMSG = """
@@ -69,3 +78,26 @@ SET_MSG = """
 
 
 __You can toggle with right side buttons__:-"""
+
+
+ABOUT_MSG = """✯ 𝙼𝚈 𝙽𝙰𝙼𝙴: <a href='https://t.me/OGGYCINEMAA_BOT'>OGGY BOT</a>
+✯ Cʀᴇᴀᴛᴏʀ: <a href='https://t.me/BATMAN_CINEMAHUB'>Tʜɪs ᴘᴇʀsᴏɴ</a>
+✯ Lɪʙʀᴀʀʏ: <a href='https://docs.pyrogram.org/'>Pʏʀᴏɢʀᴀᴍ</a>
+✯ Lᴀɴɢᴜᴀɢᴇ: <a href='https://www.python.org/download/releases/3.0/'>Pʏᴛʜᴏɴ 3</a>
+✯ DᴀᴛᴀBᴀsᴇ: <a href='https://www.mongodb.com/'>MᴏɴɢᴏDB</a>
+✯ Bᴏᴛ Sᴇʀᴠᴇʀ: <a href='https://t.me/MYFASTSERVERR'>Qᴜɪᴄᴋ Fᴀsᴛ</a>
+✯ Bᴜɪʟᴅ Sᴛᴀᴛᴜs: v2.0.3 [ Sᴛᴀʙʟᴇ ]</b>"""
+
+ST_HELP_MSG = """
+**You can find the bot commands here.**
+**Group Commands:-**
+‣/help - __Show this help message__
+‣/settings - __Toggle settings of Precise Mode and Button Mode__
+`Precise Mode:` 
+- __If Enabled, bot will match the word & return results with only the exact match__
+- __If Disabled, bot will match the word & return all the results containing the word__ 
+`Result Mode:` 
+- __If Button, bot will return results in button format__
+- __If List, bot will return results in list format__
+- __If HyperLink, bot will return results in hyperlink format__"""
+
