@@ -133,14 +133,6 @@ async def filter_pm(bot, message, search=None):
     if admin_settings.btn_del:
         run_time = datetime.now() + timedelta(seconds=int(admin_settings.btn_del))
         trigger = DateTrigger(run_date=run_time)
-        if btn_msg:
-            scheduler.add_job(
-                del_message,
-                trigger,
-                args=[btn_msg.chat.id, btn_msg.id],
-                max_instances=500000,
-                misfire_grace_time=200,
-            )
         if nf_msg:
             scheduler.add_job(
                 del_message,
