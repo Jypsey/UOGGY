@@ -6,7 +6,6 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.pool import StaticPool
 from sqlalchemy.orm.exc import NoResultFound
 from groupfilter import DB_URL, LOGGER
-from groupfilter.db.settings_sql import get_admin_settings
 from sqlalchemy import Column, Text, Boolean, BigInteger, Integer
 
 
