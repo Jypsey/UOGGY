@@ -240,7 +240,7 @@ async def get_pm_result(search, page_no, user_id, username, chat_id):
         crnt_pg = index // 10 + 1
         tot_pg = (count + 10 - 1) // 10
         btn_count = 0
-        result = f"**📁 𝐇𝐞𝐫𝐞 𝐢𝐬 𝐖𝐡𝐚𝐭 𝐈 𝐅𝐨𝐮𝐧𝐝 𝐈𝐧 𝐌𝐲 𝐃𝐚𝐭𝐚𝐛𝐚𝐬𝐞 𝐅𝐨𝐫 𝐘𝐨𝐮𝐫 𝐐𝐮𝐞𝐫𝐲 👇**\n\n**🍂 𝐌𝐨𝐯𝐢𝐞 𝐍𝐚𝐦𝐞 :** `{search}`\n**🗳️ 𝐓𝐨𝐭𝐚𝐥 𝐑𝐞𝐬𝐮𝐥𝐭𝐬 :** `{count}`\n**📚 𝐓𝐨𝐭𝐚𝐥 𝐏𝐚𝐠𝐞𝐬 :** `{crnt_pg}/{tot_pg}`\n"
+        result = f"**Search Query:** `{search}`\n**Total Results:** `{count}`\n**Page:** `{crnt_pg}/{tot_pg}`\n"
         page = page_no
 
         for file in files["files"]:
@@ -398,6 +398,14 @@ async def send_pm_file(admin_settings, bot, query, user_id, file_id, cbq):
     if admin_settings.caption_uname:
         f_caption = f_caption + "\n\n" + admin_settings.caption_uname
 
+    buttons = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton("🎥NEW MOVIES 🎥", url="https://t.me/CINEMA_HUB_NEWMOVIES")
+            ]
+        ]
+    )
+
     info = None
     if admin_settings.info_msg and admin_settings.info_img:
         if cbq:
@@ -425,6 +433,7 @@ async def send_pm_file(admin_settings, bot, query, user_id, file_id, cbq):
                 caption=f_caption,
                 parse_mode=ParseMode.MARKDOWN,
                 quote=True,
+                reply_markup=buttons, 
             )
         else:
             msg = await query.message.reply_cached_media(
@@ -432,6 +441,7 @@ async def send_pm_file(admin_settings, bot, query, user_id, file_id, cbq):
                 caption=f_caption,
                 parse_mode=ParseMode.MARKDOWN,
                 quote=True,
+                reply_markup=buttons, 
             )
     except MediaEmpty:
         LOGGER.warning("File not found: %s", str(file_id))
