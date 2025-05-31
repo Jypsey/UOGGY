@@ -1,11 +1,14 @@
 import threading
 from sqlalchemy import create_engine
-from sqlalchemy import Column, TEXT, Boolean, Numeric, BigInteger
+from sqlalchemy import Column, TEXT, Boolean, Numeric, BigInteger, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.pool import StaticPool
 from sqlalchemy.orm.exc import NoResultFound
 from groupfilter import DB_URL, LOGGER
+from groupfilter.db.settings_sql import get_admin_settings
+from sqlalchemy import Column, Text, Boolean, BigInteger, Integer
+
 
 
 BASE = declarative_base()
@@ -13,26 +16,27 @@ BASE = declarative_base()
 
 class AdminSettings(BASE):
     __tablename__ = "admin_settings"
-    setting_name = Column(TEXT, primary_key=True)
-    auto_delete = Column(Numeric)
-    custom_caption = Column(TEXT)
-    fsub_channel = Column(Numeric)
-    fsub_channel2 = Column(Numeric)
-    channel_link = Column(TEXT)
-    channel_link2 = Column(TEXT)
+
+    setting_name = Column(Text, primary_key=True)
+    auto_delete = Column(Integer)
+    custom_caption = Column(Text)
+    fsub_channel = Column(BigInteger)
+    fsub_channel2 = Column(BigInteger)
+    channel_link = Column(Text)
+    channel_link2 = Column(Text)
     join_req = Column(Boolean)
     join_req2 = Column(Boolean)
-    caption_uname = Column(TEXT)
+    caption_uname = Column(Text)
     repair_mode = Column(Boolean)
-    info_msg = Column(TEXT)
-    del_msg = Column(TEXT)
-    info_img = Column(TEXT)
-    del_img = Column(TEXT)
-    notfound_msg = Column(TEXT)
-    notfound_img = Column(TEXT)
-    fsub_msg = Column(TEXT)
-    fsub_img = Column(TEXT)
-    btn_del = Column(Numeric)
+    info_msg = Column(Text)
+    del_msg = Column(Text)
+    info_img = Column(Text)
+    del_img = Column(Text)
+    notfound_msg = Column(Text)
+    notfound_img = Column(Text)
+    fsub_msg = Column(Text)
+    fsub_img = Column(Text)
+    btn_del = Column(Integer)
 
     def __init__(self, setting_name="default"):
         self.setting_name = setting_name
