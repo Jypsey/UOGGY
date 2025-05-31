@@ -33,6 +33,7 @@ START_MSG = const.START_MSG
 START_KB = const.START_KB
 HELP_MSG = const.HELP_MSG
 HELP_KB = const.HELP_KB
+ABOUT_MSG = const.ABOUT_MSG
 
 
 # logging Conf
