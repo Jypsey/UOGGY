@@ -75,10 +75,10 @@ async def back(bot, query):
     user_id = query.from_user.id
     name = query.from_user.first_name if query.from_user.first_name else " "
     try:
-        start_msg = START_MSG.format(name, user_id)
+        start_msg = START_MSG.format(name=name, user_id=user_id)
     except Exception as e:
         LOGGER.warning(e)
-        start_msg = STARTMSG
+        start_msg = START_MSG
     try:
         await query.message.edit_text(start_msg, reply_markup=START_KB)
     except MessageNotModified:
