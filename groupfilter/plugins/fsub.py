@@ -30,7 +30,7 @@ async def check_fsub(
         return True
         
     if admin_settings:
-        txt = admin_settings.fsub_msg or "**♦️ READ THIS INSTRUCTION ♦️\n\n🗣 നിങ്ങൾ ചോദിക്കുന്ന സിനിമകൾ നിങ്ങൾക്ക് ലഭിക്കണം എന്നുണ്ടെങ്കിൽ നിങ്ങൾ ഞങ്ങളുടെ ചാനലിലേക്ക് റിക്വസ്റ്റ് ചെയ്തിരിക്കണം. റിക്വസ്റ്റ് ചെയ്യാൻ  ⚓️ 𝗥𝗲𝗾𝘂𝗲𝘀𝘁 𝘁𝗼 𝗝𝗼𝗶𝗻 ⚓️ എന്ന ബട്ടണിൽ അമർത്തിയാൽ നിങ്ങൾക്ക് ഞാൻ ആ സിനിമ അയച്ചു തരുന്നതാണ്..😍\n\n🗣 In Order To Get The Movie Requested By You in Our Group, You Must Have To join Our Official Channel First By Clicking ⚓️ 𝗥𝗲𝗾𝘂𝗲𝘀𝘁 𝘁𝗼 𝗝𝗼𝗶𝗻 ⚓️ Button or the Link shown Below. I'll Send You That Movie 🙈\n\n👇CLICK ⚓️ 𝗥𝗲𝗾𝘂𝗲𝘀𝘁 𝘁𝗼 𝗝𝗼𝗶𝗻 ⚓️👇**"
+        txt = admin_settings.fsub_msg or "**♦️ READ THIS INSTRUCTION ♦️\n\n🗣 നിങ്ങൾ ചോദിക്കുന്ന സിനിമകൾ നിങ്ങൾക്ക് ലഭിക്കണം എന്നുണ്ടെങ്കിൽ നിങ്ങൾ ഞങ്ങളുടെ ചാനലിലേക്ക് റിക്വസ്റ്റ് ചെയ്തിരിക്കണം. റിക്വസ്റ്റ് ചെയ്യാൻ  ⚓️ 𝗥𝗲𝗾𝘂𝗲𝘀𝘁 𝘁𝗼 𝗝𝗼𝗶𝗻 ⚓️ എന്ന ബട്ടണിൽ അമർത്തിയാൽ നിങ്ങൾക്ക് ഞാൻ ആ സിനിമ അയച്ചു തരുന്നതാണ്..😍\n\n🗣 In Order To Get The Movie Requested By You in Our Group, You Must Have To join Our Official Channel First By Clicking ⚓️ 𝗥𝗲𝗾𝘂𝗲𝘀𝘁 𝗝𝗼𝗶𝗻 ⚓️ Button or the Link shown Below. I'll Send You That Movie 🙈\n\n👇CLICK ⚓️ 𝗥𝗲𝗾𝘂𝗲𝘀𝘁 𝗝𝗼𝗶𝗻 ⚓️👇**"
         fsub_img = getattr(admin_settings, "fsub_img", None)
 
     try:
@@ -38,44 +38,65 @@ async def check_fsub(
         if user.status == ChatMemberStatus.BANNED:
             await msg.reply_text("Sorry, you are Banned to use me.", quote=True)
             return False
+        return True
+
     except UserNotParticipant:
-        user_det = await is_req_user(int(user_id), int(force_sub))
-        if user_det and not user_det.fileid:
-            return True
+        try:
+            user_det = await is_req_user(int(user_id), int(force_sub))
+            if user_det and not user_det.fileid:
+                return True
 
-        if request:
-            btn_txt = "⚓ Request to Join"
-        else:
-            btn_txt = "⚓ Join Channel"
+            if request:
+                btn_txt = "⚓️ 𝗥𝗲𝗾𝘂𝗲𝘀𝘁 𝘁𝗼 𝗝𝗼𝗶𝗻 ⚓️"
+            else:
+                btn_txt = "⚓ Join Channel"
 
-        kb = InlineKeyboardMarkup([[InlineKeyboardButton(btn_txt, url=link)]])
+            kb = InlineKeyboardMarkup([[InlineKeyboardButton(btn_txt, url=link)]])
 
-        if admin_settings and admin_settings.fsub_msg and admin_settings.fsub_img:
-            sub_msg = await msg.reply_photo(
-                photo=fsub_img,
-                caption=txt,
-                reply_markup=kb,
-                parse_mode=ParseMode.MARKDOWN,
+            if admin_settings and admin_settings.fsub_msg and admin_settings.fsub_img:
+                sub_msg = await msg.reply_photo(
+                    photo=fsub_img,
+                    caption=txt,
+                    reply_markup=kb,
+                    parse_mode=ParseMode.MARKDOWN,
+                    quote=True,
+                )
+            elif admin_settings and admin_settings.fsub_msg:
+                sub_msg = await msg.reply_text(
+                    text=txt,
+                    reply_markup=kb,
+                    parse_mode=ParseMode.MARKDOWN,
+                    quote=True,
+                )
+            else:
+                sub_msg = await msg.reply_text(txt, reply_markup=kb, quote=True)
+
+            try:
+                if request:
+                    await add_fsub_req_user(user_id, force_sub, file_id, sub_msg.id)
+                else:
+                    await add_fsub_reg_user(user_id, force_sub, file_id, sub_msg.id)
+            except Exception as db_error:
+                LOGGER.error(f"Database error in check_fsub: {db_error}")
+                # Try to delete the message if DB operation failed
+                try:
+                    await sub_msg.delete()
+                except:
+                    pass
+                return False
+
+            return False
+
+        except Exception as e:
+            LOGGER.error(f"Error in UserNotParticipant handling: {e}")
+            await msg.reply_text(
+                text="Something went wrong, please try again later",
                 quote=True,
             )
-        elif admin_settings and admin_settings.fsub_msg:
-            sub_msg = await msg.reply_text(
-                text=txt,
-                reply_markup=kb,
-                parse_mode=ParseMode.MARKDOWN,
-                quote=True,
-            )
-        else:
-            sub_msg = await msg.reply_text(txt, reply_markup=kb, quote=True)
-
-        if request:
-            await add_fsub_req_user(user_id, force_sub, file_id, sub_msg.id)  # todo
-        else:
-            await add_fsub_reg_user(user_id, force_sub, file_id, sub_msg.id)  # todo
-        return False
+            return False
 
     except Exception as e:
-        LOGGER.warning(e)
+        LOGGER.error(f"Unexpected error in check_fsub: {e}")
         await msg.reply_text(
             text="Something went wrong, please contact my support group",
             quote=True,
