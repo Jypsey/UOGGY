@@ -3,8 +3,9 @@ import sys
 import asyncio
 import time
 import shutil
+from pyrogram.types import Message
 from psutil import cpu_percent, virtual_memory, disk_usage
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.errors import MessageNotModified
 from groupfilter.db.broadcast_sql import add_user
 from groupfilter.utils.constants import START_MSG, HELPMSG
@@ -33,12 +34,13 @@ async def start(bot, update):
             start_msg = START_MSG.format(name, user_id)
         except Exception as e:
             LOGGER.warning(e)
-            start_msg = STARTMSG.format(name, user_id)
+            start_msg = START_MSG.format(name, user_id)
         await update.reply_video(
             video='https://envs.sh/JXQ.mp4',
             caption=start_msg,
             quote=True,
             reply_markup=START_KB,
+            parse_mode=enums.ParseMode.HTML
         ) 
     elif len(update.command) == 2:
         src = update.command[1].split("_")
