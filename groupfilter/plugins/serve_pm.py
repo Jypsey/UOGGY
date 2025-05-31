@@ -405,9 +405,6 @@ async def send_pm_file(admin_settings, bot, query, user_id, file_id, cbq):
 
     info = None
     
-    if not admin_settings:
-    LOGGER.warning("Admin settings is None for user_id=%s, skipping optional UI elements.", user_id)
-    
     if admin_settings:
         if admin_settings.info_msg and admin_settings.info_img:
             if cbq:
