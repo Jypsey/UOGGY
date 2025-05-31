@@ -320,7 +320,7 @@ async def get_pm_files(bot, query):
     if isinstance(query, CallbackQuery):
         try:
             file_id = query.data.split("#")[1]
-            await query.answer("📨 𝐒𝐞𝐧𝐝𝐢𝐧𝐠 𝐟𝐢𝐥𝐞...", cache_time=10)
+            await query.answer("📨 Sending File..", cache_time=10)
             cbq = True
         except QueryIdInvalid:
             await bot.send_message(
@@ -387,16 +387,21 @@ async def get_pm_files(bot, query):
 async def send_pm_file(admin_settings, bot, query, user_id, file_id, cbq):
     filedetails = await get_file_details(file_id)
     f_caption = ""
+
     for files in filedetails:
         f_caption = files.caption
-        if admin_settings.custom_caption:
-            f_caption = f"📂 Fɪʟᴇɴᴀᴍᴇ : {files.file_name}" + "\n\n" + admin_settings.custom_caption
-        elif f_caption is None:
+
+        if f_caption is None:
             f_caption = f"📂 Fɪʟᴇɴᴀᴍᴇ : {files.file_name}"
+
+        if admin_settings and admin_settings.custom_caption:
+            f_caption = f"📂 Fɪʟᴇɴᴀᴍᴇ : {files.file_name}" + "\n\n" + admin_settings.custom_caption
+
         f_caption = "**" + f_caption + "**"
 
-    if admin_settings.caption_uname:
-        f_caption = f_caption + "\n\n" + admin_settings.caption_uname
+        if admin_settings and admin_settings.caption_uname:
+            f_caption = f_caption + "\n\n" + admin_settings.caption_uname
+
 
     buttons = InlineKeyboardMarkup(
         [
