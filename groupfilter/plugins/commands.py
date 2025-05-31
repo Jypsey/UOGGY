@@ -35,7 +35,7 @@ async def start(bot, update):
             LOGGER.warning(e)
             start_msg = STARTMSG.format(name, user_id)
         await update.reply_video(
-            video='BAACAgUAAxkBAAMHaBUN5he9iIHUOFpvdOmh9g-js2YAAhsWAALdM2lViawEjUU8zXseBA',
+            video='https://envs.sh/JXQ.mp4',
             caption=start_msg,
             quote=True,
             reply_markup=START_KB,
