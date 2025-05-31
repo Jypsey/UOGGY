@@ -8,7 +8,7 @@ from pyrogram import Client, filters
 from pyrogram.errors import MessageNotModified
 from groupfilter.db.broadcast_sql import add_user
 from groupfilter.utils.constants import STARTMSG, HELPMSG
-from groupfilter import LOGGER, ADMINS, START_MSG, HELP_MSG, START_KB, HELP_KB
+from groupfilter import LOGGER, ADMINS, START_MSG, HELP_MSG, START_KB, HELP_KB, ST_HELP_MSG, ABOUT_MSG
 from groupfilter.utils.util_support import humanbytes, get_db_size
 from groupfilter.plugins.serve import get_files, scheduler
 from groupfilter.plugins.serve_pm import filter_pm
@@ -80,7 +80,14 @@ async def back(bot, query):
         await query.message.edit_text(start_msg, reply_markup=START_KB)
     except MessageNotModified:
         pass
-
+@Client.on_callback_query(filters.regex(r"^about_cb$"))
+async def about_cb(bot, query):
+    try:
+        about_msg = ABOUT_MSG
+    except Exception as e:
+        LOGGER.warning(e)
+        about_msg = HELPMSG
+    await query.message.edit_text(about_msg, reply_markup=HELP_KB)
 
 @Client.on_callback_query(filters.regex(r"^help_cb$"))
 async def help_cb(bot, query):
