@@ -5,9 +5,17 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 START_KB = InlineKeyboardMarkup(
     [
-        [InlineKeyboardButton('⚙ Lᴀᴛᴇꜱᴛ Mᴏᴠɪᴇ Rᴇʟᴇᴀꜱᴇꜱ ⚙', url='https://t.me/+mKFmz9pYLkc5Njhl')],
-        [InlineKeyboardButton('⚓️ Oᴛᴛ Iɴsᴛᴀɢʀᴀᴍ Cʜᴀɴɴᴇʟ ⚓️', url='https://www.instagram.com/new_ott__updates?igsh=enI5ZzIzcXkzd3Bl')],
-        [InlineKeyboardButton('🖥 Oᴛᴛ Uᴩᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ 🖥', url='https://t.me/+lZJAEj2PKAE3OTM0')]
+        [
+            InlineKeyboardButton('🔗 ᴏᴜʀ ᴄʜᴀɴᴇʟꜱ ʟɪɴᴋꜱ 🔗', url='https://t.me/CINEMAHUB_LINK')
+            ],[
+            InlineKeyboardButton('📌 ᴍʏ ɢʀᴏᴜᴘ', url='https://t.me/+rotT30StVG1hYmZl'),
+            InlineKeyboardButton('🛠 ᴍʏ ᴏᴡɴᴇʀ', url='https://t.me/BATMAN_CINEMAHUB')
+            ],[
+            InlineKeyboardButton('⚠️ ʜᴇʟᴘ', callback_data='help_cb'),
+            InlineKeyboardButton('⚙️ ᴀʙᴏᴜᴛ', callback_data='about_cb')
+            ],[
+            InlineKeyboardButton('➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ', url='https://t.me/OGGYCINEMAA_BOT?startgroup=true')           
+        ]
     ]
 )
 HELP_KB = InlineKeyboardMarkup(
@@ -19,13 +27,8 @@ HELP_KB = InlineKeyboardMarkup(
 )
 
 
-START_MSG = """**𝖧𝖾𝗒 [{}](tg://user?id={}), 𝖨 𝖠𝗆 [𝗠𝗔𝗠𝗠𝗢𝗢𝗧𝗧𝗬](https://t.me/mcu_Mammootty_v4_bot), 𝖧𝖺𝗉𝗉𝗒 🖤 𝖳𝗈 𝖧𝖺𝗏𝖾 𝖸𝗈𝗎
-
-𝖨𝖺𝗆 𝖯𝗈𝗐𝖾𝗋𝖥𝗎𝗅𝗅 𝖠𝗎𝗍𝗈 𝖥𝗂𝗅𝗍𝖾𝗋 + 𝖬𝗈𝗏𝗂𝖾 𝖲𝖾𝖺𝗋𝖼𝗁 + 𝖬𝖺𝗇𝗎𝖺𝗅 𝖥𝗂𝗅𝗍𝖾𝗋 𝖡𝗈𝗍 ⚙️
-
-Here You Can Request Movie's, Just Sent [Movie Name](https://t.me/mcu_Mammootty_v4_bot) With Proper [Google](https://www.google.com/) Spelling..!!
-
-Cᴏɴᴛᴀᴄᴛ Bᴏᴛ Dᴇᴠᴇʟᴏᴘᴇʀ (Oʀ) Rᴇᴘᴏʀᴛ Bᴜɢꜱ..!! 👉 @MCU_ADMIN_V1_BOT**"""
+START_MSG ="""Hi <b><a href='tg://user?id={user_id}'>{name}</a></b>,  
+ഞാൻ ഒരു <b>AUTO FILTER BOT</b> ആണ്, എന്റെ ഉടമസ്ഥർ <a href='https://t.me/+sZr3rX7Al48yZTI1'>CINEMA-HUB</a> ആണ്, നിങ്ങൾക്കും നിങ്ങളുടെ ഗ്രൂപ്പുകളിൽ ഇപ്പോൾ എന്നെ ഉപയോഗിക്കാവുന്നതാണ്"""
 
 HELP_MSG = """
 **You can find the bot commands here.**
