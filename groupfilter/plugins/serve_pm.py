@@ -389,47 +389,44 @@ async def send_pm_file(admin_settings, bot, query, user_id, file_id, cbq):
     f_caption = ""
 
     for files in filedetails:
-        f_caption = files.caption
-
-        if f_caption is None:
-            f_caption = f"📂 Fɪʟᴇɴᴀᴍᴇ : {files.file_name}"
+        f_caption = files.caption or f"📂 Fɪʟᴇɴᴀᴍᴇ : {files.file_name}"
 
         if admin_settings and admin_settings.custom_caption:
-            f_caption = f"📂 Fɪʟᴇɴᴀᴍᴇ : {files.file_name}" + "\n\n" + admin_settings.custom_caption
+            f_caption = f"📂 Fɪʟᴇɴᴀᴍᴇ : {files.file_name}\n\n{admin_settings.custom_caption}"
 
         f_caption = "**" + f_caption + "**"
 
         if admin_settings and admin_settings.caption_uname:
-            f_caption = f_caption + "\n\n" + admin_settings.caption_uname
+            f_caption += "\n\n" + admin_settings.caption_uname
 
-
-    buttons = InlineKeyboardMarkup(
-        [
-            [
-                InlineKeyboardButton("🎥NEW MOVIES 🎥", url="https://t.me/CINEMA_HUB_NEWMOVIES")
-            ]
-        ]
-    )
+    buttons = InlineKeyboardMarkup([
+        [InlineKeyboardButton("🎥NEW MOVIES 🎥", url="https://t.me/CINEMA_HUB_NEWMOVIES")]
+    ])
 
     info = None
-    if admin_settings.info_msg and admin_settings.info_img:
-        if cbq:
-            info = await query.message.reply_photo(
-                chat_id=user_id,
-                photo=admin_settings.info_img,
-                caption=admin_settings.info_msg,
-            )
-        else:
-            info = await query.reply_photo(
-                photo=admin_settings.info_img,
-                caption=admin_settings.info_msg,
-                quote=True,
-            )
-    elif admin_settings.info_msg and not admin_settings.info_img:
-        if cbq:
-            info = await query.message.reply_text(admin_settings.info_msg)
-        else:
-            info = await query.reply_text(admin_settings.info_msg)
+    
+    if not admin_settings:
+    LOGGER.warning("Admin settings is None for user_id=%s, skipping optional UI elements.", user_id)
+    
+    if admin_settings:
+        if admin_settings.info_msg and admin_settings.info_img:
+            if cbq:
+                info = await query.message.reply_photo(
+                    chat_id=user_id,
+                    photo=admin_settings.info_img,
+                    caption=admin_settings.info_msg,
+                )
+            else:
+                info = await query.reply_photo(
+                    photo=admin_settings.info_img,
+                    caption=admin_settings.info_msg,
+                    quote=True,
+                )
+        elif admin_settings.info_msg:
+            if cbq:
+                info = await query.message.reply_text(admin_settings.info_msg)
+            else:
+                info = await query.reply_text(admin_settings.info_msg)
 
     try:
         if cbq:
@@ -438,7 +435,7 @@ async def send_pm_file(admin_settings, bot, query, user_id, file_id, cbq):
                 caption=f_caption,
                 parse_mode=ParseMode.MARKDOWN,
                 quote=True,
-                reply_markup=buttons, 
+                reply_markup=buttons,
             )
         else:
             msg = await query.message.reply_cached_media(
@@ -446,11 +443,12 @@ async def send_pm_file(admin_settings, bot, query, user_id, file_id, cbq):
                 caption=f_caption,
                 parse_mode=ParseMode.MARKDOWN,
                 quote=True,
-                reply_markup=buttons, 
+                reply_markup=buttons,
             )
     except MediaEmpty:
         LOGGER.warning("File not found: %s", str(file_id))
         return
+
 
     if admin_settings.auto_delete:
         try:
