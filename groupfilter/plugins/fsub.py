@@ -44,7 +44,7 @@ async def check_fsub(
             return True
 
         if request:
-            btn_txt = "⚓️ 𝗥𝗲𝗾𝘂𝗲𝘀𝘁 𝘁𝗼 𝗝𝗼𝗶𝗻 ⚓️"
+            btn_txt = "⚓ Request to Join"
         else:
             btn_txt = "⚓ Join Channel"
 
