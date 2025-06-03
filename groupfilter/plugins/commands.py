@@ -37,7 +37,7 @@ async def start(bot, update):
             start_msg = f"Hi {name}, welcome to the bot!"
             
         await update.reply_video(
-            video='https://envs.sh/l_O.mp4',
+            video='https://envs.sh/JXQ.mp4',
             caption=start_msg,
             quote=True,
             reply_markup=START_KB,
