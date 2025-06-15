@@ -14,7 +14,7 @@ START_KB = InlineKeyboardMarkup(
             InlineKeyboardButton('⚠️ ʜᴇʟᴘ', callback_data='help_cb'),
             InlineKeyboardButton('⚙️ ᴀʙᴏᴜᴛ', callback_data='about_cb')
             ],[
-            InlineKeyboardButton('➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ', url='https://t.me/OGGYCINEEMAA_BOT?startgroup=true')           
+            InlineKeyboardButton('➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ', url='https://t.me/OGGYYCINEMAHUB_BOT?startgroup=true')           
         ]
     ]
 )
@@ -44,7 +44,7 @@ HELP_MSG = """
 - __If HyperLink, bot will return results in hyperlink format__
 """
 
-ABOUT_MSG = """✯ 𝙼𝚈 𝙽𝙰𝙼𝙴: <a href='https://t.me/OGGYCINEEMAA_BOT'>OGGY BOT</a>
+ABOUT_MSG = """✯ 𝙼𝚈 𝙽𝙰𝙼𝙴: <a href='https://t.me/OGGYYCINEMAHUB_BOT'>OGGY BOT</a>
 ✯ Cʀᴇᴀᴛᴏʀ: <a href='https://t.me/BATMAN_CINEMAHUB'>Tʜɪs ᴘᴇʀsᴏɴ</a>
 ✯ Lɪʙʀᴀʀʏ: <a href='https://docs.pyrogram.org/'>Pʏʀᴏɢʀᴀᴍ</a>
 ✯ Lᴀɴɢᴜᴀɢᴇ: <a href='https://www.python.org/download/releases/3.0/'>Pʏᴛʜᴏɴ 3</a>
